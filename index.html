@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hasnae Abouchouar — Cloud & DevSecOps Engineer</title>
+<meta name="description" content="Freelance Cloud & DevSecOps engineer. CI/CD, GitOps, Kubernetes and security automation for teams that need infrastructure that ships.">
+
+<style>
+  :root {
+    /* cool slate neutrals, deliberately biased away from pure grey */
+    --bg:        #f5f4f0;
+    --surface:   #ffffff;
+    --surface-2: #edece6;
+    --text:      #16181c;
+    --muted:     #565c64;
+    --faint:     #8a9098;
+    --border:    #e0ded6;
+    --border-2:  #d3d0c7;
+    /* warm signal amber on cool ground — the one bold note */
+    --accent:    #a9660a;
+    --accent-ink:#8a5307;
+    --accent-soft: rgba(169,102,10,0.10);
+    /* semantic status, separate from the accent */
+    --pass:      #2c7d51;
+    --pass-soft: rgba(44,125,81,0.12);
+    --shadow:    0 1px 2px rgba(20,24,30,.04), 0 8px 30px rgba(20,24,30,.06);
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+
+    --maxw: 960px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #0e1013;
+      --surface:   #16191e;
+      --surface-2: #1c2026;
+      --text:      #eae9e3;
+      --muted:     #9aa1a9;
+      --faint:     #6b7178;
+      --border:    #262b31;
+      --border-2:  #313740;
+      --accent:    #e8a33d;
+      --accent-ink:#f0b45c;
+      --accent-soft: rgba(232,163,61,0.12);
+      --pass:      #4ec27e;
+      --pass-soft: rgba(78,194,126,0.14);
+      --shadow:    0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0e1013; --surface:#16191e; --surface-2:#1c2026; --text:#eae9e3;
+    --muted:#9aa1a9; --faint:#6b7178; --border:#262b31; --border-2:#313740;
+    --accent:#e8a33d; --accent-ink:#f0b45c; --accent-soft:rgba(232,163,61,0.12);
+    --pass:#4ec27e; --pass-soft:rgba(78,194,126,0.14);
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --bg:#f5f4f0; --surface:#ffffff; --surface-2:#edece6; --text:#16181c;
+    --muted:#565c64; --faint:#8a9098; --border:#e0ded6; --border-2:#d3d0c7;
+    --accent:#a9660a; --accent-ink:#8a5307; --accent-soft:rgba(169,102,10,0.10);
+    --pass:#2c7d51; --pass-soft:rgba(44,125,81,0.12);
+    --shadow:0 1px 2px rgba(20,24,30,.04), 0 8px 30px rgba(20,24,30,.06);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  a { color: inherit; }
+  ::selection { background: var(--accent-soft); }
+
+  .mono { font-family: var(--mono); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before { content: "//"; color: var(--faint); }
+
+  /* ---- top bar ---- */
+  header.bar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+  .brand { font-family: var(--mono); font-weight: 700; letter-spacing: .04em; font-size: 15px; }
+  .brand .sq { color: var(--accent); }
+  nav.links { display: flex; gap: 22px; font-family: var(--mono); font-size: 13px; }
+  nav.links a { color: var(--muted); text-decoration: none; transition: color .15s; }
+  nav.links a:hover { color: var(--text); }
+  nav.links a:focus-visible, .btn:focus-visible, .status:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+  }
+  @media (max-width: 640px) { nav.links { display: none; } }
+
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--text);
+    border: 1px solid var(--border-2); border-radius: 999px;
+    padding: 5px 12px; background: var(--surface); text-decoration: none;
+    white-space: nowrap;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); box-shadow: 0 0 0 0 var(--pass); }
+  .dot.live { animation: pulse 2.4s ease-out infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pass) 55%, transparent); }
+    70% { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dot.live { animation: none; } }
+
+  /* ---- hero ---- */
+  section.hero { padding: 78px 0 20px; }
+  .prompt { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+  .prompt .p { color: var(--pass); }
+  .prompt .c { color: var(--accent); }
+  .cursor { display: inline-block; width: 9px; height: 1.05em; background: var(--accent); vertical-align: -2px; margin-left: 3px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(34px, 6.4vw, 62px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .role {
+    font-size: clamp(17px, 2.4vw, 21px);
+    color: var(--text);
+    font-weight: 600;
+    margin: 0 0 20px;
+  }
+  .role b { color: var(--accent-ink); font-weight: 600; }
+  .lede {
+    font-size: 17px; color: var(--muted); max-width: 60ch; margin: 0 0 30px;
+  }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 44px; }
+  .btn {
+    font-family: var(--mono); font-size: 13.5px; text-decoration: none;
+    padding: 11px 20px; border-radius: 8px; display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--border-2); transition: transform .12s ease, border-color .15s, background .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #1a1206; }
+  .btn.ghost { background: var(--surface); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--accent); }
+
+  /* ---- metrics ---- */
+  .metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    background: var(--surface); box-shadow: var(--shadow);
+  }
+  .metric { padding: 20px; border-right: 1px solid var(--border); }
+  .metric:last-child { border-right: none; }
+  .metric .n { font-family: var(--mono); font-size: clamp(20px, 3vw, 28px); font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .metric .n .u { color: var(--accent); }
+  .metric .l { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  @media (max-width: 640px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .metric:nth-child(2) { border-right: none; }
+    .metric:nth-child(1), .metric:nth-child(2) { border-bottom: 1px solid var(--border); }
+  }
+
+  /* ---- generic section ---- */
+  section.blk { padding: 64px 0; }
+  .blk h2 {
+    font-family: var(--mono); font-weight: 700; letter-spacing: -.01em;
+    font-size: clamp(22px, 3.6vw, 30px); margin: 12px 0 8px; text-wrap: balance;
+  }
+  .blk .sub { color: var(--muted); max-width: 58ch; margin: 0 0 34px; }
+
+  /* ---- services ---- */
+  .svc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 640px) { .svc { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; transition: border-color .15s, transform .15s;
+  }
+  .card:hover { border-color: var(--border-2); transform: translateY(-2px); }
+  .card .k { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); letter-spacing: .06em; }
+  .card h3 { font-size: 17px; margin: 8px 0 8px; font-weight: 650; }
+  .card p { color: var(--muted); font-size: 14.5px; margin: 0 0 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; background: var(--surface-2);
+  }
+
+  /* ---- pipeline / experience ---- */
+  .pipe { position: relative; padding-left: 30px; }
+  .pipe::before {
+    content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px;
+    background: linear-gradient(var(--border-2), var(--border-2));
+  }
+  .stage { position: relative; padding-bottom: 34px; }
+  .stage:last-child { padding-bottom: 0; }
+  .stage .node {
+    position: absolute; left: -30px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--pass);
+  }
+  .stage .node::after {
+    content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--pass);
+  }
+  .stage-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+  .stage-head .r { font-weight: 650; font-size: 16.5px; }
+  .stage-head .co { color: var(--accent-ink); font-weight: 600; }
+  .stage-head .when { font-family: var(--mono); font-size: 12.5px; color: var(--faint); margin-left: auto; }
+  .pill {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+    color: var(--pass); background: var(--pass-soft); border: 1px solid color-mix(in srgb, var(--pass) 30%, transparent);
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .stage .desc { color: var(--muted); font-size: 13.5px; margin: 4px 0 12px; font-style: italic; }
+  .stage ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .stage li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--text); }
+  .stage li::before {
+    content: "▸"; position: absolute; left: 2px; top: -1px; color: var(--accent); font-size: 13px;
+  }
+
+  /* ---- stack ---- */
+  .stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 640px) { .stack { grid-template-columns: 1fr; } }
+  .grp { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .grp .gh { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .grp .row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  /* ---- credentials ---- */
+  .creds { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .creds { grid-template-columns: 1fr; } }
+
+  /* ---- contact ---- */
+  section.contact {
+    border-top: 1px solid var(--border); background: var(--surface);
+    padding: 64px 0;
+  }
+  .contact h2 { font-family: var(--mono); font-size: clamp(24px, 4vw, 34px); margin: 8px 0 12px; letter-spacing: -.01em; }
+  .contact p.big { color: var(--muted); max-width: 54ch; margin: 0 auto 26px; }
+  .contact .center { text-align: center; }
+  .cinfo { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px; }
+  .cinfo a, .cinfo span {
+    font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; background: var(--bg);
+  }
+  .cinfo a:hover { color: var(--text); border-color: var(--accent); }
+
+  footer.foot { padding: 26px 0 40px; }
+  .foot .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="brand">hasnae<span class="sq">.</span>abouchouar</span>
+    <nav class="links" aria-label="Sections">
+      <a href="#services">services</a>
+      <a href="#work">work</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <a class="status" href="#contact"><span class="dot live"></span>Available for freelance</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="prompt"><span class="p">hasnae@cloud</span>:<span class="c">~</span>$ whoami<span class="cursor"></span></p>
+      <h1>Cloud &amp; DevSecOps<br>engineer.</h1>
+      <p class="role">I ship <b>secure, automated infrastructure</b> — CI/CD, GitOps &amp; Kubernetes on AWS and on-prem.</p>
+      <p class="lede">
+        AWS-certified engineer helping teams move faster without breaking security. I build the pipelines,
+        clusters and guardrails that let code go from commit to production — reliably, repeatably, and observably.
+        Available for remote contracts across Morocco, France and the EU.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="mailto:abouchouarhasnae@gmail.com?subject=Freelance%20project%20—%20DevOps">$ start a project</a>
+        <a class="btn ghost" href="#work">view work →</a>
+      </div>
+
+      <div class="metrics" aria-label="Highlights">
+        <div class="metric"><div class="n">AWS<span class="u"> ✦</span></div><div class="l">Certified Cloud Practitioner</div></div>
+        <div class="metric"><div class="n">23<span class="u">+</span></div><div class="l">prod apps security-hardened</div></div>
+        <div class="metric"><div class="n">2<span class="u">GB+</span></div><div class="l">registry storage reclaimed</div></div>
+        <div class="metric"><div class="n">3<span class="u">×</span></div><div class="l">clouds: AWS · Nutanix · Azure</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="services">
+    <div class="wrap">
+      <span class="eyebrow">what I build for you</span>
+      <h2>Services</h2>
+      <p class="sub">Pick a problem — I own it end to end, from design to a running, documented system your team can maintain.</p>
+      <div class="svc">
+        <div class="card">
+          <div class="k">01 · pipelines</div>
+          <h3>CI/CD &amp; GitOps</h3>
+          <p>Commit-to-prod pipelines with automated builds, tests and deploys. Declarative, git-driven, and auditable.</p>
+          <div class="tags"><span class="tag">Gitea Actions</span><span class="tag">Jenkins</span><span class="tag">Azure DevOps</span><span class="tag">ArgoCD</span></div>
+        </div>
+        <div class="card">
+          <div class="k">02 · platform</div>
+          <h3>Kubernetes engineering</h3>
+          <p>Production-grade clusters on EKS or on-prem NKE — Helm packaging, autoscaling, and sane defaults that survive real traffic.</p>
+          <div class="tags"><span class="tag">Kubernetes</span><span class="tag">EKS / NKE</span><span class="tag">Helm</span><span class="tag">Docker</span></div>
+        </div>
+        <div class="card">
+          <div class="k">03 · security</div>
+          <h3>DevSecOps &amp; hardening</h3>
+          <p>Shift-left security baked into the SDLC — SAST/DAST scanning, vulnerability triage, and remediation that actually ships.</p>
+          <div class="tags"><span class="tag">SonarQube</span><span class="tag">OWASP ZAP</span><span class="tag">DefectDojo</span><span class="tag">Trivy</span></div>
+        </div>
+        <div class="card">
+          <div class="k">04 · automation</div>
+          <h3>IaC &amp; workflow automation</h3>
+          <p>Infrastructure as code and the glue that removes toil — reproducible environments and self-running maintenance jobs.</p>
+          <div class="tags"><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Crossplane</span><span class="tag">n8n</span></div>
+        </div>
+        <div class="card">
+          <div class="k">05 · observability</div>
+          <h3>Monitoring &amp; alerting</h3>
+          <p>Dashboards and alerts that tell you what broke before your users do — metrics you can act on, not noise.</p>
+          <div class="tags"><span class="tag">Prometheus</span><span class="tag">Grafana</span></div>
+        </div>
+        <div class="card">
+          <div class="k">06 · resilience</div>
+          <h3>Backup &amp; disaster recovery</h3>
+          <p>Tested backup and restore for stateful clusters, so an outage is a recovery drill — not a crisis.</p>
+          <div class="tags"><span class="tag">Velero</span><span class="tag">AWS S3</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="work">
+    <div class="wrap">
+      <span class="eyebrow">shipped &amp; running</span>
+      <h2>Selected work</h2>
+      <p class="sub">A pipeline of roles — each one deployed, verified, and left better than I found it.</p>
+      <div class="pipe">
+
+        <div class="stage">
+          <span class="node"></span>
+          <div class="stage-head">
+            <span class="r">Cloud &amp; DevSecOps Engineer</span>
+            <span class="co">· Intelcia</span>
+            <span class="pill">● in production</span>
+            <span class="when">2024 — present</span>
+          </div>
+          <p class="desc">DevSecOps automation for cloud-native infrastructure at scale.</p>
+          <ul>
+            <li>Built secure CI/CD pipelines on AWS and Nutanix (EKS / NKE) with GitOps delivery through ArgoCD.</li>
+            <li>Integrated SAST (SonarQube) and DAST (OWASP ZAP) across the SDLC, centralizing findings in DefectDojo.</li>
+            <li>Automated the Jira ticket lifecycle for security findings via custom n8n workflows.</li>
+            <li>Remediated security headers (CSP, HSTS, X-Content-Type-Options) across ~23 production apps via K8s Ingress.</li>
+            <li>Replaced Harbor's unreliable scheduler with an API-driven n8n maintenance pipeline — retention + GC reclaiming 2&nbsp;GB+.</li>
+            <li>Configured Velero backups to AWS S3 for an on-prem cluster, ensuring disaster-recovery readiness.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <span class="node"></span>
+          <div class="stage-head">
+            <span class="r">Cloud &amp; DevOps Engineer</span>
+            <span class="co">· Metaverse SAR</span>
+            <span class="pill">✓ delivered</span>
+            <span class="when">2024 · internship</span>
+          </div>
+          <p class="desc">GenAI project — RAG model evaluation pipeline.</p>
+          <ul>
+            <li>Built an Azure DevOps CI/CD pipeline automating performance testing and KPI analysis for a RAG model.</li>
+            <li>Wired a webhook to publish performance reports to Microsoft Teams, improving team responsiveness.</li>
+            <li>Processed large datasets in parallel with PySpark and containerized data services with Docker.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <span class="node"></span>
+          <div class="stage-head">
+            <span class="r">Cloud &amp; DevOps Engineer</span>
+            <span class="co">· TTV</span>
+            <span class="pill">✓ delivered</span>
+            <span class="when">2023 · internship</span>
+          </div>
+          <p class="desc">Highly available Kubernetes cluster on Amazon EKS with Crossplane.</p>
+          <ul>
+            <li>Provisioned and managed a highly available production EKS cluster using Crossplane for declarative IaC.</li>
+            <li>Integrated AWS services (EKS, S3, VPC) with Kubernetes via Crossplane compositions.</li>
+            <li>Configured autoscaling and monitoring to optimize cluster performance and availability.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="stack">
+    <div class="wrap">
+      <span class="eyebrow">the toolbox</span>
+      <h2>Stack</h2>
+      <p class="sub">Tools I reach for daily — chosen to fit the problem, not to pad a list.</p>
+      <div class="stack">
+        <div class="grp">
+          <div class="gh">Cloud &amp; Containers</div>
+          <div class="row">
+            <span class="tag">AWS</span><span class="tag">Kubernetes</span><span class="tag">Docker</span>
+            <span class="tag">Helm</span><span class="tag">EKS</span><span class="tag">NKE</span>
+            <span class="tag">Crossplane</span><span class="tag">Harbor</span>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="gh">CI/CD &amp; GitOps</div>
+          <div class="row">
+            <span class="tag">Jenkins</span><span class="tag">Azure DevOps</span><span class="tag">Gitea Actions</span>
+            <span class="tag">ArgoCD</span><span class="tag">Git</span><span class="tag">n8n</span>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="gh">DevSecOps</div>
+          <div class="row">
+            <span class="tag">SonarQube</span><span class="tag">OWASP ZAP</span><span class="tag">DefectDojo</span><span class="tag">Trivy</span>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="gh">Observability &amp; IaC</div>
+          <div class="row">
+            <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Terraform</span>
+            <span class="tag">Ansible</span><span class="tag">Bash</span><span class="tag">Linux</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:34px;">
+        <span class="eyebrow">credentials</span>
+        <div class="creds" style="margin-top:16px;">
+          <div class="card">
+            <div class="k">certification</div>
+            <h3>AWS Certified Cloud Practitioner</h3>
+            <p style="margin:0;">Amazon Web Services — cloud fundamentals, architecture &amp; security.</p>
+          </div>
+          <div class="card">
+            <div class="k">education</div>
+            <h3>State Engineering Degree — EHTP</h3>
+            <p style="margin:0;">Information Systems, 2022–2025 · CPGE Math &amp; Physics, 2020–2022.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap center">
+      <span class="eyebrow" style="justify-content:center; display:inline-flex;">let's build</span>
+      <h2>Have infrastructure that needs to ship?</h2>
+      <p class="big">Tell me the problem — a flaky pipeline, a cluster to stand up, a security backlog, or a migration. I reply within a day.</p>
+      <div class="cta" style="justify-content:center;">
+        <a class="btn primary" href="mailto:abouchouarhasnae@gmail.com?subject=Freelance%20project%20—%20DevOps">$ email me</a>
+        <a class="btn ghost" href="tel:+212642134291">call · +212 642 134 291</a>
+      </div>
+      <div class="cinfo">
+        <a href="mailto:abouchouarhasnae@gmail.com">abouchouarhasnae@gmail.com</a>
+        <span>📍 Casablanca, Morocco · GMT+1</span>
+        <!-- TODO: replace the # below with your real LinkedIn URL -->
+        <a href="#" title="Replace with your LinkedIn URL">linkedin →</a>
+        <a href="https://github.com/Hasnaeab" target="_blank" rel="noopener">github →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Hasnae Abouchouar</span>
+      <span>built &amp; deployed · GitOps all the way down</span>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
